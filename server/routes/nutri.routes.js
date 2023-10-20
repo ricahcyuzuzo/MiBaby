@@ -1,5 +1,5 @@
 import express from 'express';
-import { createNutritionPlan, deleteNutrition, getNutriByBaby, getNutriByPediatrician, updatePushToken } from '../controllers/nitriplan.controller';
+import { createGrowth, createNutritionPlan, deleteNutrition, getGrowth, getNutriByBaby, getNutriByPediatrician, updatePushToken } from '../controllers/nitriplan.controller';
 
 const routes = express();
 
@@ -8,6 +8,8 @@ routes.get('/nutrition', getNutriByBaby);
 routes.delete('/nutrition', deleteNutrition);
 routes.patch('/notification', updatePushToken);
 routes.get('/nutrition-ped', getNutriByPediatrician);
+routes.post('/growth', createGrowth);
+routes.get('/growth', getGrowth);
 
 const nutriRoutes = routes;
 

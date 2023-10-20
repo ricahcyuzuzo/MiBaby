@@ -1,6 +1,7 @@
 import Mongoose from 'mongoose';
 import nutritionPlanModel from '../models/nutriplan.model';
 import jwtDecode from 'jwt-decode';
+import GrowingModel from '../models/growing.model';
 
 export const createNutritionPlan = async (req, res) => {
     try {
@@ -95,3 +96,42 @@ export const getNutriByPediatrician = async (req, res) => {
         })
     }
 } 
+
+export const createGrowth = async (req, res) => {
+    try {
+        const { babyId, motherId } = req.query;
+        const {weight, height, month} = req.body;
+
+        const created = await GrowingModel.create({
+            _id: new Mongoose.Types.ObjectId(),
+            weight,
+            height,
+            month,
+            baby: babyId,
+            mother: motherId,
+        });
+
+        if(created){
+            return res.status(201).json({
+                message: "Growth add sccessfully.",
+            })
+        }
+
+    } catch (error) {
+        return res.status(500).json({
+            message: "Something wrong happened",
+        })
+    }
+}
+
+export const getGrowth = async (req, res) => {
+    try {
+        const { babyId } = req.query; 
+        const growth = await GrowingModel.find({ baby: babyId });
+        return res.status(200).json({
+            growth,
+        })
+    } catch (error) {
+        
+    }
+}
